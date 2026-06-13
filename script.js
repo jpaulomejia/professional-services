@@ -14,7 +14,7 @@ const FORMSPREE_ID = 'mpqelqrl';
 
 // ─────────────────────────────────────────────────────────────────
 
-const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
 document.getElementById('contactForm').addEventListener('submit', async function (e) {
   e.preventDefault();
@@ -39,7 +39,7 @@ document.getElementById('contactForm').addEventListener('submit', async function
 
   try {
     // Save to Supabase
-    const { error: dbError } = await supabase.from('contacts').insert([data]);
+    const { error: dbError } = await supabaseClient.from('contacts').insert([data]);
     if (dbError) throw new Error('Database error: ' + dbError.message);
 
     // Send email via Formspree
