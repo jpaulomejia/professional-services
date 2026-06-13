@@ -1,0 +1,744 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>How to Build & Launch a Website — Full Guide</title>
+  <style>
+    :root {
+      --navy: #1e3a5f;
+      --blue: #2d6a9f;
+      --light: #f0f6ff;
+      --green: #2e7d32;
+      --green-bg: #e8f5e9;
+      --yellow-bg: #fff8e1;
+      --yellow: #f0a500;
+      --border: #dde4ee;
+      --text: #333;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      color: var(--text);
+      background: #fff;
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 3rem 2rem;
+      line-height: 1.7;
+      font-size: 15px;
+    }
+
+    /* Cover */
+    .cover {
+      text-align: center;
+      padding: 3rem 0 2.5rem;
+      border-bottom: 4px solid var(--navy);
+      margin-bottom: 2.5rem;
+    }
+    .cover h1 { font-size: 2.2rem; color: var(--navy); margin-bottom: 0.5rem; }
+    .cover .subtitle { color: #666; font-size: 1.05rem; margin-bottom: 1rem; }
+    .cover .badges { display: flex; gap: 0.75rem; justify-content: center; flex-wrap: wrap; margin-top: 1rem; }
+    .badge {
+      display: inline-block;
+      background: var(--light);
+      color: var(--blue);
+      border: 1px solid var(--blue);
+      border-radius: 20px;
+      padding: 0.3rem 1rem;
+      font-size: 0.82rem;
+      font-weight: 600;
+    }
+
+    /* Table of contents */
+    .toc {
+      background: var(--light);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 1.5rem 2rem;
+      margin-bottom: 2.5rem;
+    }
+    .toc h2 { color: var(--navy); margin-bottom: 1rem; font-size: 1.1rem; }
+    .toc ol { padding-left: 1.5rem; }
+    .toc li { padding: 0.25rem 0; color: var(--blue); font-size: 0.95rem; }
+
+    /* Part headers */
+    .part {
+      background: var(--navy);
+      color: #fff;
+      border-radius: 12px;
+      padding: 1.25rem 1.75rem;
+      margin: 3rem 0 1.75rem;
+    }
+    .part h2 { font-size: 1.25rem; margin-bottom: 0.25rem; }
+    .part .part-sub { color: #7eb3e0; font-size: 0.9rem; }
+
+    /* Section headers */
+    h3 {
+      color: var(--blue);
+      font-size: 1.05rem;
+      margin: 1.75rem 0 0.75rem;
+      padding-left: 0.75rem;
+      border-left: 3px solid var(--blue);
+    }
+
+    p { color: #444; margin-bottom: 0.75rem; }
+
+    /* Steps */
+    .step {
+      background: var(--light);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 1.25rem 1.5rem;
+      margin-bottom: 1rem;
+    }
+    .step-title {
+      display: flex;
+      align-items: center;
+      font-weight: 600;
+      color: var(--navy);
+      font-size: 1rem;
+      margin-bottom: 0.6rem;
+    }
+    .num {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--navy);
+      color: #fff;
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      font-size: 0.82rem;
+      font-weight: bold;
+      margin-right: 0.75rem;
+      flex-shrink: 0;
+    }
+    .step p { margin-bottom: 0.4rem; font-size: 0.95rem; }
+    .step ul { padding-left: 1.5rem; margin: 0.4rem 0; }
+    .step ul li { color: #555; font-size: 0.95rem; padding: 0.2rem 0; }
+
+    /* Code */
+    code {
+      background: #e4eaf4;
+      color: #c0392b;
+      padding: 0.15rem 0.45rem;
+      border-radius: 4px;
+      font-family: 'Courier New', monospace;
+      font-size: 0.88rem;
+    }
+    pre {
+      background: #1a2535;
+      color: #a8d8a8;
+      padding: 1rem 1.25rem;
+      border-radius: 8px;
+      font-family: 'Courier New', monospace;
+      font-size: 0.88rem;
+      overflow-x: auto;
+      margin: 0.75rem 0;
+      line-height: 1.7;
+    }
+
+    /* Callouts */
+    .note {
+      background: var(--yellow-bg);
+      border-left: 4px solid var(--yellow);
+      padding: 0.75rem 1rem;
+      border-radius: 0 8px 8px 0;
+      margin: 0.75rem 0;
+      font-size: 0.9rem;
+      color: #555;
+    }
+    .success {
+      background: var(--green-bg);
+      border-left: 4px solid var(--green);
+      padding: 0.75rem 1rem;
+      border-radius: 0 8px 8px 0;
+      margin: 0.75rem 0;
+      font-size: 0.9rem;
+      color: var(--green);
+      font-weight: 500;
+    }
+    .warning {
+      background: #fff3e0;
+      border-left: 4px solid #e65100;
+      padding: 0.75rem 1rem;
+      border-radius: 0 8px 8px 0;
+      margin: 0.75rem 0;
+      font-size: 0.9rem;
+      color: #bf360c;
+    }
+
+    /* File list */
+    .file-list {
+      background: #1a2535;
+      color: #cdd9e5;
+      border-radius: 8px;
+      padding: 1rem 1.25rem;
+      font-family: 'Courier New', monospace;
+      font-size: 0.88rem;
+      line-height: 1.8;
+      margin: 0.75rem 0;
+    }
+    .file-list .folder { color: #7eb3e0; }
+    .file-list .file { color: #a8d8a8; }
+    .file-list .desc { color: #888; }
+
+    /* Summary table */
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 1rem 0;
+      font-size: 0.92rem;
+    }
+    th {
+      background: var(--navy);
+      color: #fff;
+      padding: 0.6rem 1rem;
+      text-align: left;
+    }
+    td {
+      padding: 0.6rem 1rem;
+      border-bottom: 1px solid var(--border);
+      color: #444;
+    }
+    tr:nth-child(even) td { background: var(--light); }
+
+    /* Footer */
+    .footer {
+      text-align: center;
+      margin-top: 4rem;
+      padding-top: 2rem;
+      border-top: 1px solid var(--border);
+      color: #aaa;
+      font-size: 0.82rem;
+    }
+
+    /* Checklist */
+    .checklist { list-style: none; padding: 0; margin: 0.5rem 0; }
+    .checklist li {
+      padding: 0.35rem 0;
+      color: #444;
+      font-size: 0.95rem;
+    }
+    .checklist li::before { content: "☐ "; color: var(--blue); font-size: 1.1rem; }
+
+    @media print {
+      .part { break-before: page; }
+      pre { white-space: pre-wrap; word-break: break-all; }
+      body { padding: 1rem; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- COVER -->
+<div class="cover">
+  <h1>How to Build &amp; Launch a Website</h1>
+  <p class="subtitle">A complete step-by-step guide — from zero to live on the internet</p>
+  <div class="badges">
+    <span class="badge">GitHub Pages — Free Hosting</span>
+    <span class="badge">Supabase — Database</span>
+    <span class="badge">Formspree — Email Notifications</span>
+    <span class="badge">No monthly cost to start</span>
+  </div>
+</div>
+
+<!-- TABLE OF CONTENTS -->
+<div class="toc">
+  <h2>What This Guide Covers</h2>
+  <ol>
+    <li>Plan your website — pages, audience, services</li>
+    <li>Build your website files — HTML, CSS, JavaScript</li>
+    <li>Set up Supabase — cloud database for storing contact form data</li>
+    <li>Set up Formspree — email notifications when someone contacts you</li>
+    <li>Connect your credentials to the website</li>
+    <li>Install Git and create a GitHub account</li>
+    <li>Push your website to GitHub</li>
+    <li>Enable GitHub Pages — make the site live</li>
+    <li>Test everything end to end</li>
+    <li>How to update the site in the future</li>
+  </ol>
+</div>
+
+<!-- ACCOUNTS NEEDED -->
+<div class="part">
+  <h2>Before You Start — Accounts You Need to Create</h2>
+  <div class="part-sub">All three are free. Create them before following this guide.</div>
+</div>
+
+<div class="step">
+  <div class="step-title"><span class="num">1</span> GitHub — <em>Where your website lives</em></div>
+  <p>GitHub stores your website files in the cloud and hosts your site for free using a feature called <strong>GitHub Pages</strong>. Without GitHub, your site only exists on your computer and no one else can see it.</p>
+  <ul>
+    <li>Go to <strong>github.com</strong> and click <strong>Sign up</strong></li>
+    <li>Create a free account using your email</li>
+    <li>Choose a professional username — it will appear in your site URL (e.g. <code>yourname.github.io</code>)</li>
+    <li>Verify your email address when prompted</li>
+  </ul>
+  <div class="success">Free. No credit card required.</div>
+</div>
+
+<div class="step">
+  <div class="step-title"><span class="num">2</span> Supabase — <em>Where contact form data is stored</em></div>
+  <p>Supabase is a free cloud database. Every time someone fills out your contact form, their name, email, phone, and message gets saved here automatically. You can log in at any time to view all submissions — like a spreadsheet in the cloud.</p>
+  <ul>
+    <li>Go to <strong>supabase.com</strong> and click <strong>Start your project</strong></li>
+    <li>Sign up using your GitHub account (easiest) or your email</li>
+    <li>You will create a project and a contacts table during setup — this guide walks you through that step by step</li>
+  </ul>
+  <div class="success">Free tier available. No credit card required to get started.</div>
+</div>
+
+<div class="step">
+  <div class="step-title"><span class="num">3</span> Formspree — <em>How you get notified of new submissions</em></div>
+  <p>Formspree sends you an email notification every time someone submits your contact form. Without it, you would have to manually log into Supabase to check for new messages. With Formspree, you get an instant email with all the details delivered to your inbox.</p>
+  <ul>
+    <li>Go to <strong>formspree.io</strong> and click <strong>Get Started</strong></li>
+    <li>Sign up using the email address where you want to receive notifications</li>
+    <li>You will create a form during setup — this guide walks you through it</li>
+  </ul>
+  <div class="success">Free tier includes up to 50 submissions per month. No credit card required.</div>
+</div>
+
+<div class="step">
+  <div class="step-title"><span class="num">4</span> VS Code — <em>Where you write your website files</em></div>
+  <p>VS Code is a free text editor made by Microsoft. It's the tool you use to write and edit your HTML, CSS, and JavaScript files. Think of it like Microsoft Word, but for code.</p>
+  <ul>
+    <li>Go to <strong>code.visualstudio.com</strong> and click <strong>Download for Mac</strong></li>
+    <li>Unzip the downloaded file and drag VS Code to your Applications folder</li>
+  </ul>
+  <div class="success">Free. No account required.</div>
+</div>
+
+<div class="note">
+  <strong>Summary:</strong> GitHub hosts your site → Supabase stores your data → Formspree emails you when someone contacts you. All three work together automatically once set up.
+</div>
+
+<!-- OVERVIEW -->
+<h3>What You Will Need</h3>
+<table>
+  <tr><th>Tool</th><th>What It Does</th><th>Cost</th></tr>
+  <tr><td>VS Code</td><td>Text editor to write your website files</td><td>Free</td></tr>
+  <tr><td>GitHub</td><td>Stores your code and hosts your website</td><td>Free</td></tr>
+  <tr><td>Supabase</td><td>Cloud database — saves contact form submissions</td><td>Free tier</td></tr>
+  <tr><td>Formspree</td><td>Sends you an email when someone submits the form</td><td>Free tier</td></tr>
+  <tr><td>Terminal (Mac)</td><td>Used to push your files to GitHub</td><td>Built into Mac</td></tr>
+</table>
+
+<!-- ══════════════════════════════════════════ -->
+<div class="part">
+  <h2>Part 1 — Plan Your Website</h2>
+  <div class="part-sub">Before writing any code, decide what your site needs</div>
+</div>
+
+<div class="step">
+  <div class="step-title"><span class="num">1</span> Decide your pages</div>
+  <p>For a simple services website, these pages work well:</p>
+  <ul>
+    <li>Home — welcome message and overview of services</li>
+    <li>Service Page 1 — detailed description of your first service</li>
+    <li>Service Page 2 — detailed description of your second service</li>
+    <li>Service Page 3 — and so on</li>
+    <li>Contact — form for visitors to reach you</li>
+  </ul>
+</div>
+
+<div class="step">
+  <div class="step-title"><span class="num">2</span> Decide what information to collect on the contact form</div>
+  <p>Common fields: First name, Last name, Email, Phone, Address, Service interested in, Message.</p>
+  <div class="note">Only collect what you actually need. Each field you add is one more thing visitors have to fill out.</div>
+</div>
+
+<div class="step">
+  <div class="step-title"><span class="num">3</span> Choose a layout</div>
+  <p>A left sidebar navigation with main content on the right is clean and easy to expand later. You can add new pages to the sidebar at any time without redesigning the whole site.</p>
+</div>
+
+<!-- ══════════════════════════════════════════ -->
+<div class="part">
+  <h2>Part 2 — Build Your Website Files</h2>
+  <div class="part-sub">Create the HTML, CSS, and JavaScript files on your computer</div>
+</div>
+
+<div class="step">
+  <div class="step-title"><span class="num">1</span> Install VS Code</div>
+  <p>Go to <strong>code.visualstudio.com</strong> and download VS Code for Mac. Unzip it and drag it to your Applications folder.</p>
+</div>
+
+<div class="step">
+  <div class="step-title"><span class="num">2</span> Create a folder for your website</div>
+  <p>Create a folder called <code>website</code> inside your projects folder. This is where all your files will live.</p>
+  <pre>/Users/yourname/projects/website/</pre>
+</div>
+
+<div class="step">
+  <div class="step-title"><span class="num">3</span> Create these files inside the folder</div>
+  <div class="file-list">
+    <span class="folder">website/</span><br>
+    &nbsp;&nbsp;<span class="file">index.html</span> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="desc">— Home page</span><br>
+    &nbsp;&nbsp;<span class="file">service-1.html</span> &nbsp;&nbsp;<span class="desc">— First service page</span><br>
+    &nbsp;&nbsp;<span class="file">service-2.html</span> &nbsp;&nbsp;<span class="desc">— Second service page</span><br>
+    &nbsp;&nbsp;<span class="file">service-3.html</span> &nbsp;&nbsp;<span class="desc">— Third service page</span><br>
+    &nbsp;&nbsp;<span class="file">contact.html</span> &nbsp;&nbsp;&nbsp;<span class="desc">— Contact form page</span><br>
+    &nbsp;&nbsp;<span class="file">styles.css</span> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="desc">— All the styling (colors, fonts, layout)</span><br>
+    &nbsp;&nbsp;<span class="file">script.js</span> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="desc">— Handles form submission to Supabase + Formspree</span>
+  </div>
+</div>
+
+<div class="step">
+  <div class="step-title"><span class="num">4</span> Key things every HTML page needs</div>
+  <p>Every page shares the same left sidebar navigation. Copy the sidebar code into each HTML file and mark the current page with <code>class="active"</code> on its nav link.</p>
+  <p>The contact page must load the Supabase library and your script before the closing <code>&lt;/body&gt;</code> tag:</p>
+  <pre>&lt;script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"&gt;&lt;/script&gt;
+&lt;script src="script.js"&gt;&lt;/script&gt;</pre>
+</div>
+
+<div class="step">
+  <div class="step-title"><span class="num">5</span> The script.js file has three placeholders to fill in later</div>
+  <pre>const SUPABASE_URL     = 'YOUR_SUPABASE_URL';
+const SUPABASE_ANON_KEY = 'YOUR_SUPABASE_ANON_KEY';
+const FORMSPREE_ID      = 'YOUR_FORMSPREE_ID';</pre>
+  <p>Leave these as placeholders for now — you will fill them in after setting up Supabase and Formspree.</p>
+  <div class="warning">Important: name your Supabase client variable something other than <code>supabase</code> to avoid a conflict with the library. Use <code>supabaseClient</code> instead.</div>
+</div>
+
+<!-- ══════════════════════════════════════════ -->
+<div class="part">
+  <h2>Part 3 — Set Up Supabase</h2>
+  <div class="part-sub">Free cloud database to store contact form submissions</div>
+</div>
+
+<div class="step">
+  <div class="step-title"><span class="num">1</span> Create a Supabase account</div>
+  <p>Go to <strong>supabase.com</strong> → click <strong>Start your project</strong> → sign up with GitHub or email.</p>
+</div>
+
+<div class="step">
+  <div class="step-title"><span class="num">2</span> Create a new project</div>
+  <ul>
+    <li>Click <strong>New Project</strong></li>
+    <li>Name it (e.g. <code>professional-services</code>)</li>
+    <li>Create a database password and save it somewhere safe</li>
+    <li>Choose the closest region (West US for California)</li>
+    <li>Click <strong>Create new project</strong> — wait about 1 minute</li>
+  </ul>
+</div>
+
+<div class="step">
+  <div class="step-title"><span class="num">3</span> Create the contacts table</div>
+  <p>In the left sidebar click <strong>SQL Editor</strong> → <strong>New Query</strong>. Paste this and click <strong>Run</strong>:</p>
+  <pre>create table contacts (
+  id         uuid default gen_random_uuid() primary key,
+  first_name text,
+  last_name  text,
+  email      text,
+  phone      text,
+  address    text,
+  service    text,
+  message    text,
+  created_at timestamp default now()
+);</pre>
+  <p>A popup will ask about Row Level Security — click <strong>Run and enable RLS</strong>.</p>
+  <div class="success">You should see: "Success. No rows returned."</div>
+</div>
+
+<div class="step">
+  <div class="step-title"><span class="num">4</span> Add the insert policy</div>
+  <p>Run a second query to allow your contact form to save data:</p>
+  <pre>create policy "Allow public to insert contacts"
+on contacts
+for insert
+to anon
+with check (true);</pre>
+  <div class="success">You should see: "Success. No rows returned."</div>
+</div>
+
+<div class="step">
+  <div class="step-title"><span class="num">5</span> Get your API credentials</div>
+  <p>Go to <strong>Project Settings</strong> → <strong>API</strong>. You need two values:</p>
+  <ul>
+    <li><strong>Project URL</strong> — looks like <code>https://xxxxxx.supabase.co</code></li>
+    <li><strong>Publishable key</strong> — starts with <code>sb_publishable_...</code></li>
+  </ul>
+  <div class="note">Use the Publishable key (safe for browsers). Never use the Secret key in a website.</div>
+  <p>Copy both values — you will paste them into <code>script.js</code> shortly.</p>
+</div>
+
+<!-- ══════════════════════════════════════════ -->
+<div class="part">
+  <h2>Part 4 — Set Up Formspree</h2>
+  <div class="part-sub">Free service that emails you every time someone submits your contact form</div>
+</div>
+
+<div class="step">
+  <div class="step-title"><span class="num">1</span> Create a Formspree account</div>
+  <p>Go to <strong>formspree.io</strong> → click <strong>Get Started</strong> → sign up with your email.</p>
+</div>
+
+<div class="step">
+  <div class="step-title"><span class="num">2</span> Create a new form</div>
+  <ul>
+    <li>Click the <strong>+</strong> button to create a form</li>
+    <li>Name it (e.g. <code>Professional Services Contact</code>)</li>
+    <li>Set the email to receive notifications</li>
+    <li>Click <strong>Create Form</strong></li>
+  </ul>
+</div>
+
+<div class="step">
+  <div class="step-title"><span class="num">3</span> Get your Form ID</div>
+  <p>Formspree will show you a URL like:</p>
+  <pre>https://formspree.io/f/mpqelqrl</pre>
+  <p>The part after <code>/f/</code> is your Form ID — copy it.</p>
+</div>
+
+<!-- ══════════════════════════════════════════ -->
+<div class="part">
+  <h2>Part 5 — Connect Your Credentials</h2>
+  <div class="part-sub">Add your Supabase and Formspree details to script.js</div>
+</div>
+
+<div class="step">
+  <div class="step-title"><span class="num">1</span> Open script.js in VS Code</div>
+  <p>Find the three placeholder lines at the top and replace them with your actual values:</p>
+  <pre>const SUPABASE_URL      = 'https://xxxxxx.supabase.co';
+const SUPABASE_ANON_KEY = 'sb_publishable_xxxxxxxxxxxx';
+const FORMSPREE_ID      = 'mpqelqrl';</pre>
+  <p>Save the file with <code>Cmd + S</code>.</p>
+</div>
+
+<div class="step">
+  <div class="step-title"><span class="num">2</span> Make sure the variable name is supabaseClient</div>
+  <p>In script.js, the line that creates the client must use <code>supabaseClient</code>, not <code>supabase</code>:</p>
+  <pre>const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);</pre>
+  <p>And all references to it later in the file should also say <code>supabaseClient</code>.</p>
+</div>
+
+<!-- ══════════════════════════════════════════ -->
+<div class="part">
+  <h2>Part 6 — Install Git &amp; Create a GitHub Account</h2>
+  <div class="part-sub">One-time setup — only needs to be done once per computer</div>
+</div>
+
+<div class="step">
+  <div class="step-title"><span class="num">1</span> Check if Git is installed</div>
+  <p>Open Terminal (<code>Cmd + Space</code> → type "Terminal" → Enter) and run:</p>
+  <pre>git --version</pre>
+  <p>If you see a version number — Git is installed, skip to Step 3.</p>
+  <p>If you see "command not found" — continue to Step 2.</p>
+</div>
+
+<div class="step">
+  <div class="step-title"><span class="num">2</span> Install Git</div>
+  <pre>xcode-select --install</pre>
+  <p>Click Install in the popup and wait for it to finish.</p>
+</div>
+
+<div class="step">
+  <div class="step-title"><span class="num">3</span> Set your name and email in Git</div>
+  <pre>git config --global user.name "Your Full Name"
+git config --global user.email "your@email.com"</pre>
+</div>
+
+<div class="step">
+  <div class="step-title"><span class="num">4</span> Create a GitHub account</div>
+  <p>Go to <strong>github.com</strong> → click <strong>Sign up</strong> → create a free account.</p>
+  <div class="note">Choose a professional username — it will appear in your website URL (e.g. <code>yourname.github.io</code>).</div>
+</div>
+
+<!-- ══════════════════════════════════════════ -->
+<div class="part">
+  <h2>Part 7 — Push Your Website to GitHub</h2>
+  <div class="part-sub">Upload your files so GitHub can host them</div>
+</div>
+
+<div class="step">
+  <div class="step-title"><span class="num">1</span> Create a new repository on GitHub</div>
+  <ul>
+    <li>Log into github.com → click <strong>+</strong> (top right) → <strong>New repository</strong></li>
+    <li>Repository name: <code>professional-services</code></li>
+    <li>Set to <strong>Public</strong></li>
+    <li>Leave README, .gitignore, and license unchecked</li>
+    <li>Click <strong>Create repository</strong></li>
+  </ul>
+</div>
+
+<div class="step">
+  <div class="step-title"><span class="num">2</span> Initialize Git in your website folder</div>
+  <p>In Terminal, run these one at a time:</p>
+  <pre>cd /Users/yourname/projects/website
+git init
+git add .
+git commit -m "Initial website upload"</pre>
+</div>
+
+<div class="step">
+  <div class="step-title"><span class="num">3</span> Connect to GitHub and push</div>
+  <pre>git remote add origin https://github.com/YOUR-USERNAME/professional-services.git
+git branch -M main
+git push -u origin main</pre>
+  <p>It will ask for your GitHub username and password. For the password, use a <strong>Personal Access Token</strong> — not your regular password.</p>
+</div>
+
+<div class="step">
+  <div class="step-title"><span class="num">4</span> How to create a Personal Access Token</div>
+  <ul>
+    <li>GitHub → click profile picture → <strong>Settings</strong></li>
+    <li>Scroll to bottom → <strong>Developer settings</strong></li>
+    <li>Click <strong>Personal access tokens</strong> → <strong>Tokens (classic)</strong></li>
+    <li>Click <strong>Generate new token (classic)</strong></li>
+    <li>Give it a name (e.g. <code>website</code>), check the <strong>repo</strong> checkbox</li>
+    <li>Click <strong>Generate token</strong> and copy it immediately</li>
+  </ul>
+  <div class="warning">Save the token somewhere safe — GitHub only shows it once. Use it as your password in Terminal.</div>
+</div>
+
+<!-- ══════════════════════════════════════════ -->
+<div class="part">
+  <h2>Part 8 — Enable GitHub Pages</h2>
+  <div class="part-sub">Make your website publicly accessible on the internet</div>
+</div>
+
+<div class="step">
+  <div class="step-title"><span class="num">1</span> Go to your repository settings</div>
+  <p>In your browser go to:</p>
+  <pre>github.com/YOUR-USERNAME/professional-services/settings/pages</pre>
+</div>
+
+<div class="step">
+  <div class="step-title"><span class="num">2</span> Enable Pages</div>
+  <ul>
+    <li>Under <strong>Branch</strong>, click the dropdown that says <strong>None</strong></li>
+    <li>Select <strong>main</strong></li>
+    <li>Click <strong>Save</strong></li>
+  </ul>
+  <p>Wait 1–2 minutes. Your site will be live at:</p>
+  <pre>https://YOUR-USERNAME.github.io/professional-services</pre>
+  <div class="success">Your website is now publicly accessible on the internet — for free!</div>
+</div>
+
+<!-- ══════════════════════════════════════════ -->
+<div class="part">
+  <h2>Part 9 — Test Everything</h2>
+  <div class="part-sub">Confirm the form is saving data and sending emails</div>
+</div>
+
+<div class="step">
+  <div class="step-title"><span class="num">1</span> Submit a test form</div>
+  <ul>
+    <li>Visit your live site → click <strong>Contact Us</strong></li>
+    <li>Fill out the form with your own info</li>
+    <li>Click <strong>Send Message</strong></li>
+    <li>You should see a green <strong>"Thank you! Your message has been sent."</strong> banner</li>
+  </ul>
+  <div class="note">If the page was open before the latest push, do a hard refresh: <code>Cmd + Shift + R</code></div>
+</div>
+
+<div class="step">
+  <div class="step-title"><span class="num">2</span> Check Supabase</div>
+  <ul>
+    <li>Go to supabase.com → your project → <strong>Table Editor</strong> → <strong>contacts</strong></li>
+    <li>You should see a new row with the data you submitted</li>
+  </ul>
+</div>
+
+<div class="step">
+  <div class="step-title"><span class="num">3</span> Check your email</div>
+  <p>You should receive an email from Formspree with all the form details — name, email, phone, service selected, and message.</p>
+  <div class="success">If all three pass — your website is fully operational!</div>
+</div>
+
+<div class="step">
+  <div class="step-title"><span class="num">4</span> Troubleshooting — if the form doesn't work</div>
+  <ul>
+    <li>Press <code>Cmd + Option + I</code> on the contact page → click <strong>Console</strong> tab</li>
+    <li>Submit the form and look for red error messages</li>
+    <li>Common issue: <strong>"supabase already declared"</strong> — make sure your client variable is named <code>supabaseClient</code> not <code>supabase</code></li>
+    <li>Common issue: form works locally but not live — you must push to GitHub first, the form won't work on a local file</li>
+  </ul>
+</div>
+
+<!-- ══════════════════════════════════════════ -->
+<div class="part">
+  <h2>Part 10 — How to Update the Site in the Future</h2>
+  <div class="part-sub">Making changes after the site is live</div>
+</div>
+
+<div class="step">
+  <div class="step-title"><span class="num">1</span> Make your changes in VS Code</div>
+  <p>Open any file, make your edits, and save with <code>Cmd + S</code>.</p>
+</div>
+
+<div class="step">
+  <div class="step-title"><span class="num">2</span> Push the changes to GitHub</div>
+  <p>Open Terminal and run:</p>
+  <pre>cd /Users/yourname/projects/website
+git add .
+git commit -m "describe what you changed"
+git push</pre>
+  <p>The live site will update automatically within 1–2 minutes.</p>
+  <div class="note">After pushing, do a hard refresh in the browser (<code>Cmd + Shift + R</code>) to see your changes.</div>
+</div>
+
+<div class="step">
+  <div class="step-title"><span class="num">3</span> Adding a new page to the site</div>
+  <ul>
+    <li>Create the new HTML file in your website folder</li>
+    <li>Add a link to it in the sidebar nav of every other page</li>
+    <li>Push to GitHub using the commands above</li>
+  </ul>
+</div>
+
+<!-- QUICK REFERENCE -->
+<div class="part">
+  <h2>Quick Reference — Everything at a Glance</h2>
+  <div class="part-sub">Bookmark this section</div>
+</div>
+
+<h3>Your Live Website</h3>
+<pre>https://YOUR-USERNAME.github.io/professional-services</pre>
+
+<h3>Key Terminal Commands</h3>
+<table>
+  <tr><th>Command</th><th>What It Does</th></tr>
+  <tr><td><code>git add .</code></td><td>Stage all changed files</td></tr>
+  <tr><td><code>git commit -m "message"</code></td><td>Save a snapshot with a description</td></tr>
+  <tr><td><code>git push</code></td><td>Upload changes to GitHub (site updates in ~2 min)</td></tr>
+  <tr><td><code>git status</code></td><td>See what files have changed</td></tr>
+</table>
+
+<h3>Where to View Your Data</h3>
+<table>
+  <tr><th>What</th><th>Where to Go</th></tr>
+  <tr><td>Contact form submissions</td><td>supabase.com → Table Editor → contacts</td></tr>
+  <tr><td>Email notifications</td><td>Your Gmail inbox (sent by Formspree)</td></tr>
+  <tr><td>Website code</td><td>github.com/YOUR-USERNAME/professional-services</td></tr>
+  <tr><td>Live site</td><td>YOUR-USERNAME.github.io/professional-services</td></tr>
+</table>
+
+<h3>Final Checklist</h3>
+<ul class="checklist">
+  <li>Website files created (HTML, CSS, JS)</li>
+  <li>Supabase project created and contacts table set up</li>
+  <li>Supabase RLS insert policy added</li>
+  <li>Formspree form created and email verified</li>
+  <li>script.js updated with Supabase URL, anon key, and Formspree ID</li>
+  <li>supabaseClient variable name used (not supabase)</li>
+  <li>Git initialized and first commit made</li>
+  <li>GitHub repository created (Public)</li>
+  <li>Files pushed to GitHub</li>
+  <li>GitHub Pages enabled on main branch</li>
+  <li>Test form submitted on live site</li>
+  <li>Data confirmed in Supabase</li>
+  <li>Email notification confirmed in Gmail</li>
+</ul>
+
+<div class="footer">
+  Built with HTML, CSS, JavaScript &bull; Hosted on GitHub Pages &bull; Data stored in Supabase &bull; Notifications via Formspree<br><br>
+  To save as PDF: File → Print → Save as PDF
+</div>
+
+</body>
+</html>
